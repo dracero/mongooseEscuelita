@@ -7,26 +7,21 @@ class ProductoController {
 
   async listar(req, res){
     try{
-
       const { id } = req.params
-
       //Obtener Todos
       if(!id){
         const prods = await productModel.getAll()
         if (prods.length === 0) {
            res.status(404).json({ error: 'No hay productos cargados' })
         }
-    
         return res.json(prods)
-      } 
-
+      }else{
       //Obtener Uno
       const producto = await productModel.get(id)
-  
-      if (producto === undefined || producto === null) 
+        if (producto === undefined || producto === null) 
         return res.status(404).json({ code: 404, message: 'No se encontro el producto' })
-  
       return res.json(producto)
+      }
     }catch(err){
       console.log(err)
       res.status(500).json({error: err})
@@ -59,10 +54,9 @@ class ProductoController {
   
       const producto = await productModel.update( (req.params.id), data)
   
-      if(producto == null || producto == undefined)
+      if(producto == null || producto == undefined){
         return res.status(404).json({ code: 404, message: 'No se encontro el producto' })
-  
-      return res.status(200).json(producto)
+      }else  return res.status(200).json(producto)
     }catch(err){
       res.status(500).json({error: err})
     }
@@ -73,11 +67,9 @@ class ProductoController {
     try{
       const producto = await productModel.delete(req.params.id)
 
-      if(producto == null || producto == undefined)
-      return res.status(404).json({ code: 404, message: 'No se encontro el producto' })
-  
-    return res.status(200).json({ message:"Se ha eliminado el producto",producto})
-      
+      if(producto == null || producto == undefined){
+        return res.status(404).json({ code: 404, message: 'No se encontro el producto' })
+      }else  return res.status(200).json({ message:"Se ha eliminado el producto",producto})   
     }catch(err){
       res.status(500).json({error: err})
     }
