@@ -1,4 +1,4 @@
-const productMD = require ('../schemas/ProductSchema') //importo la conexion knexMysql como knex
+const productMD = require ('../schemas/ProductSchema')
 
 class Producto{
     constructor(){
